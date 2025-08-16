@@ -1,0 +1,14 @@
+streamlit>=1.35.0
+pymupdf>=1.24.0
+pillow>=10.3.0
+# pytesseract>=0.3.10
+
+ocrmypdf
+googletrans
+
+
+streamlit==1.38.0
+pymupdf==1.24.9
+# googletrans==4.0.0rc1
+# Pillow==10.4.0
+# nest_asyncio==1.6.0
