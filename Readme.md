@@ -1,5 +1,18 @@
 # PDF Translate — Automated PDF Translation & Redaction (Python)
 
+# PDF Translate — Automated PDF Translation & Redaction (Python)
+
+[![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Docker](https://img.shields.io/badge/Docker-Supported-blue)](https://www.docker.com/)
+[![Build with ocrmypdf](https://img.shields.io/badge/OCR-ocrmypdf-orange)](https://ocrmypdf.readthedocs.io/)
+[![Powered by PyMuPDF](https://img.shields.io/badge/PDF-PyMuPDF-red)](https://pymupdf.readthedocs.io/)
+[![Translation](https://img.shields.io/badge/Translation-Google%20Translate-yellow)](https://pypi.org/project/googletrans/)
+[![Hugging Face Space](https://img.shields.io/badge/🤗%20HuggingFace-Space-purple)](https://huggingface.co/spaces/MohitGupta0123/HIN_EN_PDF_Translator)
+[![Stars](https://img.shields.io/github/stars/YourUsername/YourRepo?style=social)](https://github.com/MohitGupta0123/HIN_EN_PDF_Translator/stargazers)
+[![Issues](https://img.shields.io/github/issues/YourUsername/YourRepo)](https://github.com/MohitGupta0123/HIN_EN_PDF_Translator/issues)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#contributing)
+
 Automate high-quality translation and selective redaction of PDFs while **preserving layout, font sizing, and colors**. The project blends:
 
 * **OCR** (via `ocrmypdf`/Tesseract) for scanned or low-quality PDFs
