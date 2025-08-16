@@ -42,7 +42,7 @@ with st.sidebar:
 st.write("Upload a PDF and (optionally) a JSON overlay (only if not using auto-overlay).")
 
 pdf_file = st.file_uploader("PDF", type=["pdf"])
-overlay_json_file = st.file_uploader("Overlay JSON (optional)", type=["json"])
+# overlay_json_file = st.file_uploader("Overlay JSON (optional)", type=["json"])
 
 # out_dir = Path("output_pdfs"); 
 # out_dir.mkdir(parents=True, exist_ok=True)
@@ -189,11 +189,7 @@ if st.button("Run translation", disabled=pdf_file is None, type="primary"):
             # overlay items (if needed)
             overlay_items = None
             if mode in ("overlay","all"):
-                if overlay_json_file is not None:
-                    with tempfile.NamedTemporaryFile(delete=False, suffix=".json", dir=workdir) as jf:
-                        jf.write(overlay_json_file.read())
-                        overlay_items = overlay_load_items(jf.name)
-                elif auto_overlay:
+                if auto_overlay:
                     overlay_items = build_overlay_items_from_doc(src, translate_dir)
                 elif mode == "overlay":
                     st.error("Overlay mode requires JSON or enable Auto overlay."); st.stop()
