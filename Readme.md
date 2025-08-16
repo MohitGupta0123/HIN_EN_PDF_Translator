@@ -9,6 +9,8 @@
 [![Translation](https://img.shields.io/badge/Translation-Google%20Translate-yellow)](https://pypi.org/project/googletrans/)
 [![Hugging Face Space](https://img.shields.io/badge/🤗%20HuggingFace-Space-purple)](https://huggingface.co/spaces/MohitGupta0123/HIN_EN_PDF_Translator)
 
+## ![DEPLOYED LINK](https://mohitg012-pdf-translation.hf.space/)
+
 Automate high-quality translation and selective redaction of PDFs while **preserving layout, font sizing, and colors**. The project blends:
 
 * **OCR** (via `ocrmypdf`/Tesseract) for scanned or low-quality PDFs
