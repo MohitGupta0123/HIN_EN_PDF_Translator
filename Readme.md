@@ -28,6 +28,7 @@ It supports English ↔︎ Hindi out of the box and can be extended to other scr
 * [Project structure](#project-structure)
 * [Installation](#installation)
 * [Quick start](#quick-start)
+* [Screenshots](#screenshots)
 * [Command-line usage](#command-line-usage)
 * [Fonts](#fonts)
 * [Overlay JSON](#overlay-json)
@@ -305,6 +306,11 @@ python pdf_translate_unified.py -i samples/Test3.pdf -o output_pdfs/t3.overlay.p
   --mode overlay --auto-overlay --translate en->hi
 ```
 
+---
+
+## Screenshots
+
+![ADD PHOTOS HERE]()
 ---
 
 ## Fonts
