@@ -1,4 +1,4 @@
-# Hindi ↔ English PDF Translator (Layout-Preserving)
+<!-- # Hindi ↔ English PDF Translator (Layout-Preserving)
 
 Translate PDFs between Hindi and English **while preserving** the original layout, tables, images, and fonts.  
 Built for free usage: **CTranslate2** (offline translation) + **Tesseract OCR** + **PyMuPDF**.
@@ -100,4 +100,7 @@ streamlit run app.py
 ## What next?
 - If you want, share one of your sample PDFs and I’ll quickly sanity-check the pipeline on it (e.g., tweak OCR grouping or font sizes).
 - When you deploy to Streamlit Cloud, remember to **add the fonts** and **models** to the repo (or download them at startup if allowed).
+ -->
 
+
+[![MohitGupta0123/HIN_EN_PDF_Translator context](https://badge.forgithub.com/MohitGupta0123/HIN_EN_PDF_Translator)](https://uithub.com/MohitGupta0123/HIN_EN_PDF_Translator)
