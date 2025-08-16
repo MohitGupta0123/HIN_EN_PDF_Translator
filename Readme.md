@@ -1,7 +1,5 @@
 # PDF Translate — Automated PDF Translation & Redaction (Python)
 
-# PDF Translate — Automated PDF Translation & Redaction (Python)
-
 [![Python](https://img.shields.io/badge/python-3.12-blue)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/Docker-Supported-blue)](https://www.docker.com/)
 [![Build with ocrmypdf](https://img.shields.io/badge/OCR-ocrmypdf-orange)](https://ocrmypdf.readthedocs.io/)
