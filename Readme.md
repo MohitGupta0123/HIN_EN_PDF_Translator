@@ -310,7 +310,8 @@ python pdf_translate_unified.py -i samples/Test3.pdf -o output_pdfs/t3.overlay.p
 
 ## Screenshots
 
-![ADD PHOTOS HERE]()
+![Pic](Pics/1.png)
+
 ---
 
 ## Fonts
