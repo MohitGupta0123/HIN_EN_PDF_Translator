@@ -74,7 +74,6 @@ def _to_rgb(color: Tuple[float, ...]) -> Tuple[float, float, float]:
     if len(color) == 1:
         v = float(color[0])
         return (v, v, v)
-    # ignore CMYK's K if present; take first three channels
     r = float(color[0]); g = float(color[1]); b = float(color[2])
     return (max(0.0, min(1.0, r)),
             max(0.0, min(1.0, g)),
@@ -135,22 +134,14 @@ def insert_text_fit(page: fitz.Page, rect, text: str, fontname: str,
     page.insert_text(r.bl, text, fontname=fontname, fontfile=fontfile, fontsize=base_size, color=color, encoding=0)
     return False
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent  # goes up from PDF_Translate/
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 ASSETS_DIR = PROJECT_ROOT / "assets" / "fonts"
-
-# def resolve_font(logical_name: str, font_path: Optional[str]):
-#     BASE14_SHORT = {"helv","times","cour","symbol","zapfdingbats"}
-#     if logical_name in BASE14_SHORT: return logical_name, None
-#     if not font_path or not os.path.exists(font_path):
-#         raise ValueError(f"Font '{logical_name}' needs a valid font file. Got: {font_path!r}")
-#     return logical_name, font_path
 
 def resolve_font(logical_name, font_path=None):
     BASE14_SHORT = {"helv","times","cour","symbol","zapfdingbats"}
     if logical_name in BASE14_SHORT:
         return logical_name, None
     if not font_path:
-        # default: look inside assets/fonts
         font_path = ASSETS_DIR / f"{logical_name}-Regular.ttf"
     if not os.path.exists(font_path):
         raise ValueError(f"Font '{logical_name}' needs a valid font file. Got: {font_path}")

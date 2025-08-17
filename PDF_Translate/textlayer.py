@@ -60,7 +60,6 @@ def transfer_color_size_from_original(spans: List[Span],
         nearest = min(candidates, key=lambda c: center_dist(sp.rect, c["bbox"]))
         sp.color = nearest["color"]; sp.fontsize = nearest["size"]
 
-# ------------------ textlayer extractors ------------------
 def _rawdict(page: fitz.Page):
     try:
         PRES = fitz.TEXT_PRESERVE_WHITESPACE | fitz.TEXT_PRESERVE_LIGATURES

@@ -22,7 +22,6 @@ def erase_original_text(out_doc: fitz.Document, spans: List[Span], mode: str, er
     for pno, sps in spans_by_page.items():
         page = out_doc[pno]
         if erase_mode == "mask":
-            # Draw rects one by one so each can have its own fill color.
             for sp in sps:
                 pad = max(1.0, 0.18 * sp.fontsize)
                 r = fitz.Rect(*sp.rect)
@@ -32,7 +31,6 @@ def erase_original_text(out_doc: fitz.Document, spans: List[Span], mode: str, er
                 fill = pick_redact_fill_for_color(sp.color)
                 page.draw_rect(r, color=None, fill=fill, overlay=True, width=0)
         else:
-            # True redactions (can vary per annot)
             added_any = False
             for sp in sps:
                 pad = max(1.0, 0.18 * sp.fontsize)
@@ -56,8 +54,8 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
              font_en_name: str, font_en_file: Optional[str],
              font_hi_name: str, font_hi_file: Optional[str],
              output_pdf: str,
-             # ----- NEW: overlay knobs -----
-             overlay_items: Optional[List[Dict[str, Any]]] = None,  # from overlay_load_items(...)
+             # ----- overlay parameters -----
+             overlay_items: Optional[List[Dict[str, Any]]] = None,
              overlay_render: str = "image",     # "image" | "textbox"
              overlay_align: int = 0,
              overlay_line_spacing: float = 1.10,
@@ -73,12 +71,10 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
 
     # ======================= "ALL" MODE =======================
     if mode == "all":
-        # We'll reopen the same source path for each sub-run so each gets a fresh doc.
         src_path = getattr(src, "name", None)
         if not src_path or not os.path.exists(src_path):
             raise ValueError("all mode requires 'src' to come from a real file (src.name must exist).")
 
-        # Close the incoming handles; we won't use them further.
         try:
             out.close()
         except Exception:
@@ -89,12 +85,11 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
             pass
 
         base, ext = os.path.splitext(output_pdf)
-        out_files: List[Tuple[str, str]] = []  # (label, path)
+        out_files: List[Tuple[str, str]] = []
 
         def _make_output(label: str) -> str:
             return f"{base}.{label}{ext}"
 
-        # Helper to create an output doc that preserves background
         def _fresh_src_out() -> Tuple[fitz.Document, fitz.Document]:
             s = fitz.open(src_path)
             o = fitz.open()
@@ -103,7 +98,6 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
                 po.show_pdf_page(po.rect, s, p)
             return s, o
 
-        # Run the 4 in-script modes
         for sub_mode in ("span", "line", "block", "hybrid"):
             try:
                 s, o = _fresh_src_out()
@@ -119,7 +113,6 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
             except Exception as e:
                 print(f"[WARN] {sub_mode} failed: {e}")
 
-        # Overlay (only if items provided)
         if overlay_items:
             try:
                 s, o = _fresh_src_out()
@@ -142,7 +135,6 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
         else:
             print("[info] overlay skipped in 'all' mode (no overlay_items provided).")
 
-        # Zip everything that exists
         zip_path = f"{base}_all_methods.zip"
         os.makedirs(os.path.dirname(zip_path) or ".", exist_ok=True)
         with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
@@ -164,10 +156,8 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
     if mode == "overlay":
         if not overlay_items:
             raise ValueError("overlay mode requires overlay_items (use overlay_load_items on your JSON).")
-        
-        # Optional: erase original text under the JSON boxes before painting (dynamic fills)
+
         if erase_mode in ("mask", "redact"):
-            # index spans by page (we already extracted 'spans' above)
             spans_by_page: Dict[int, List[Span]] = {}
             for sp in spans:
                 spans_by_page.setdefault(sp.page, []).append(sp)
@@ -193,7 +183,6 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
                     page.add_redact_annot(r, fill=fill)
                     redacted_pages.add(pno)
 
-            # apply redactions per page
             if erase_mode == "redact":
                 for pno in redacted_pages:
                     try:
@@ -216,7 +205,6 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
             text = it.get("text", "") or it.get("translated_text", "") or ""
             base_fs = float(it.get("fontsize", 11.5))
 
-            # choose fontfile for glyph coverage
             fontfile = overlay_choose_fontfile_for_text(text, font_en_file, font_hi_file)
 
             if overlay_render == "image":
@@ -268,7 +256,7 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
                     page.add_redact_annot(rr, fill=fill)
                     redacted_pages.add(pno)
 
-            if overlay_items:  # when provided, erase under intended overlay boxes
+            if overlay_items:
                 for it in overlay_items:
                     pno = int(it["page"])
                     if not (0 <= pno < len(out)):
@@ -281,7 +269,7 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
                     base_fs = float(it.get("fontsize", 11.5))
                     pad = max(1.0, 0.18 * base_fs)
                     _erase_rect(pno, rect, pad)
-            else:  # no overlay JSON -> erase using each hybrid block region
+            else:
                 for bl in hblocks:
                     pno = bl.page
                     rect = fitz.Rect(*bl.rect)
@@ -295,7 +283,6 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
                     except Exception as e:
                         print(f"[page {pno}] apply_redactions error: {e}")
 
-        # ---- DRAW: translate & place text per table/column awareness ----
         for bl in hblocks:
             if translate_dir == "hi->en":
                 sl, dl = "hi", "en"
@@ -340,7 +327,6 @@ def run_mode(mode: str, src: fitz.Document, out: fitz.Document,
         print(f"[OK] Wrote translated PDF to: {output_pdf}")
         return
 
-    # ---- non-hybrid modes (span/line/block) ----
     erase_original_text(out, spans, mode, erase_mode, redact_color)
 
     if mode == "span":

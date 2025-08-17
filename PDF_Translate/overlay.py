@@ -126,9 +126,8 @@ def overlay_draw_text_as_image(page: fitz.Page,
 
         return True, canvas
 
-    # Binary search pixel font size around target (pt -> px)
     start_px = max(4, int(round(base_fontsize_pt / 72.0 * target_dpi)))
-    lo, hi = 4, max(4, start_px + 3)   # +3pt headroom in px
+    lo, hi = 4, max(4, start_px + 3)
     ok, best_img = False, None
 
     success, tmp = render_with_size(hi)
@@ -184,7 +183,6 @@ def build_overlay_items_from_doc_v2(doc: fitz.Document,
       - original_text
       - translated_text
     """
-    # Reuse your existing extractors & style mappers
     spans_for_style = extract_spans_from_textlayer(doc)
     hblocks = extract_blocks_with_segments(doc)
     derive_block_styles_from_spans(hblocks, spans_for_style)
@@ -192,7 +190,6 @@ def build_overlay_items_from_doc_v2(doc: fitz.Document,
     items: List[Dict[str, Any]] = []
 
     for bl in hblocks:
-        # Decide language direction once per block for stability
         if translate_dir in ("hi->en", "en->hi"):
             sl, dl = translate_dir.split("->", 1)
         else:

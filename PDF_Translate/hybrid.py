@@ -119,7 +119,6 @@ def is_table_like(hb: HybridBlock) -> bool:
     if multi >= max(2, int(0.3 * len(hb.lines))):
         return True
 
-    # persistent x-bands
     bands = []
     for ln in hb.lines:
         for seg in ln.segments:

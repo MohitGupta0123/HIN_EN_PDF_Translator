@@ -12,7 +12,7 @@ DEFAULT_REDACT_COLOR = (1, 1, 1)   # white
 TR_TIMEOUT = 45
 
 # Fonts (update paths to your TTFs)
-FONT_EN_LOGICAL = "NotoSans"             # base14 fallback could be "helv"
+FONT_EN_LOGICAL = "NotoSans"
 FONT_EN_PATH    = str(Path(__file__).resolve().parent.parent / r"assets/fonts/NotoSans-Regular.ttf")
 FONT_HI_LOGICAL = "TiroDevanagariHindi"
 FONT_HI_PATH    = str(Path(__file__).resolve().parent.parent / r"assets/fonts/TiroDevanagariHindi-Regular.ttf")
