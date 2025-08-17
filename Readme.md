@@ -19,6 +19,8 @@ Automate high-quality translation and selective redaction of PDFs while **preser
 
 It supports English ↔︎ Hindi out of the box and can be extended to other scripts.
 
+![Pic](Pics/1.png)
+
 ---
 
 ## Table of contents
@@ -305,12 +307,6 @@ python pdf_translate_unified.py -i samples/Test3.pdf -o output_pdfs/t3.overlay.p
 python pdf_translate_unified.py -i samples/Test3.pdf -o output_pdfs/t3.overlay.pdf \
   --mode overlay --auto-overlay --translate en->hi
 ```
-
----
-
-## Screenshots
-
-![Pic](Pics/1.png)
 
 ---
 
