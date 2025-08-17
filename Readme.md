@@ -467,3 +467,7 @@ Please run `ruff`/`black` (if configured) and include before/after sample PDFs f
 * **Google Translate** (via `googletrans`) for quick translation prototyping
 
 ---
+
+## Author
+
+Mohit Gupta
